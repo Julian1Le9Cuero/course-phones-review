@@ -2,7 +2,9 @@ package database
 
 import (
 	"database/sql"
-	// "github.com/julian1le9cuero"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/julian1le9cuero/course-phones-review/internal/logs"
 )
 
 type MySqlClient struct {
@@ -10,14 +12,14 @@ type MySqlClient struct {
 }
 
 // Return db client
-func NewSqlClient(source string) *sql.DB {
+func NewSqlClient(source string) *MySqlClient {
 	// Metodo open para abrir conexion
 	// driverName = "mysql"
 	// dataSourceName = source argument
 	db, err := sql.Open("mysql", source)
 
 	if err != nil {
-		logs.log().Errorf("cannot create db: %s", err.Error())
+		logs.Log().Errorf("cannot create db: %s", err.Error())
 		// Panic stops the execution
 		panic(err)
 	}
@@ -25,7 +27,7 @@ func NewSqlClient(source string) *sql.DB {
 	err = db.Ping()
 
 	if err != nil {
-		logs.log().Warn("cannot connect to mysql")
+		logs.Log().Warn("cannot connect to mysql")
 	}
 
 	return &MySqlClient{db}

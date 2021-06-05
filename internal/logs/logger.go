@@ -22,6 +22,6 @@ func InitLogger() error {
 	return nil
 }
 
-func log() *zap.SugaredLogger {
+func Log() *zap.SugaredLogger {
 	return sugar
 }
